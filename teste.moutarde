@@ -1,0 +1,129 @@
+(destination:
+
+  (restaurant:
+  
+    (menu:
+      (size:
+        (weight:150g)
+        (size:small)
+      )
+      
+      (size:
+        (weight:200g)
+        (size:medium)
+      )
+      
+      (size:
+        (weight:250g)
+        (size:large)
+      )
+    )
+  
+  )
+
+
+  (bookstore:  
+  
+    (book:
+     (title:Everyday Italian)
+     (author:Giadia De Laurentiis)
+     (year:2005)
+     (price:
+       (country:
+         (price:40)
+         (country:France)
+       )
+       (country:
+         (price:39.5)
+         (country:UK)
+       )
+       (country:
+         (price:38)
+         (country:Italy)
+       )
+     )
+     (sells:
+       (country:
+         (s:10840)
+         (country:France)
+       )
+       (country:
+         (s:96539)
+         (country:UK)
+       )
+       (country:
+         (s:38)
+         (country:Italy)
+       )
+     )
+    )
+  
+    (book:
+     (title:Harry Poter)
+     (author:J K Rowling)
+     (year:2005)
+     (price:
+       (country:
+         (price:20)
+         (country:France)
+       )
+       (country:
+         (price:37.5)
+         (country:UK)
+       )
+       (country:
+         (price:31)
+         (country:Italy)
+       )
+     )
+     (sells:
+       (country:
+         (s:10840)
+         (country:France)
+       )
+       (country:
+         (s:96539)
+         (country:UK)
+       )
+       (country:
+         (s:38)
+         (country:Italy)
+       )
+     )
+    )
+  
+    (book:
+     (title:Learning XML)
+     (author:Erik T. Ray)
+     (year:2003)
+     (price:
+       (country:
+         (price:49)
+         (country:France)
+       )
+       (country:
+         (price:30.5)
+         (country:UK)
+       )
+       (country:
+         (price:30.6)
+         (country:Italy)
+       )
+     )
+     (sells:
+       (country:
+         (s:10840)
+         (country:France)
+       )
+       (country:
+         (s:96539)
+         (country:UK)
+       )
+       (country:
+         (s:38)
+         (country:Italy)
+       )
+     )
+    )
+  )
+)

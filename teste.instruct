@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title> Teste </title>
+        <link rel = "stylesheet" href = "style.css">
+        <meta charset="utf-8"/>
+</head>
+(<body>
+ <center>
+         (f:destination:
+         <b>(v:restaurant/menu/size/weight:)</b>
+           <table>
+           (f:bookstore/book:
+             (w:title:=[Everyday Italian,Harry Potter,Learning XML]
+               <tr>
+                 (f:price/country:
+                   (w:country:=[UK,Italy]
+                     <th>(v:price:)</th>
+                   )
+                 )
+                
+                 (w:sells/country/country:=[Italy]
+                 (f:sells/country:
+                   (w:country:=[UK,Italy]
+                     <th>(v:s:)</th>
+                   )
+                 )
+                 )
+                
+                 (f:sells/country:
+                   (w:country:=[UK,Italy]
+                     <th>(v:s:)</th>
+                   )
+                 )
+
+                 <th>(v:title:)</th>
+                 <th>(v:author:)</th>
+               </tr>
+             )
+           )
+           </table>
+          (f:restaurant/menu/size:
+            (w:size:=[large,small]
+            <i>(v:weight:)</i>
+            )
+          )
+          (v:restaurant/menu/size/weight:)
+        )
+  </center>
+</body>
+)
