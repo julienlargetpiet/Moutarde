@@ -13,23 +13,21 @@
                <ul>
                  (f:price/country:
                    (w:country:=[UK,Italy]
-                     <li>(v:price:)</li>
+                     <li>here 1: (v:price:)</li>
                    )
                  )
                 
-                 (w:sells/country/country:=[Italy]
+                 (w:sells/country/country:=[France]
                  (f:sells/country:
-                   (w:country:=[UK,Italy]
-                    (w:country:=[Italy]
-                       <li>(v:s:)</li>
-                     )
+                   (w:country:=[Franc2e]
+                       <li>here 2: (v:s:)</li>
                    )
                  )
                  )
                 
                  (f:sells/country:
-                   (w:country:=[UK,Italy]
-                     <li>(v:s:)</li>
+                   (w:country:=[France,UK]
+                     <li>here3: (v:s:)</li>
                    )
                  )
 
