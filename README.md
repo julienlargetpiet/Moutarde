@@ -44,6 +44,7 @@ For example, the following query will search for the first boo ktitle it finds.
 `f` is used as the keyword for a `for loop`
 
 Where the `for loop` loops is defined via its `path` inside the `moutarde` file.
+Of course, you can `for loop` inside another `for loop`, and so on...
 
 For example, the folowing query will search for all the books title inside the bookstore.
 
@@ -81,11 +82,13 @@ The conditions is defined after the `path` and the `:` character, as you see in 
 
 The supported conditions are: 
 
-- `=` is equal ?
-- `>` is greater ?
-- `<` is lower ?
-- `!` is not equal ?
+- `=` is equal to at least one inside `[x1,x2,x3...]` ?
+- `>` is greater than at least one in `[x1,x2,x3...]` ?
+- `<` is lower than at least one in `[x1,x2,x3...]` ?
+- `!` is not equal to at least one in `[x1,x2,x3...]` ?
 - `E` belongs to [min,max] ? (working on it)
+
+Of course, you can interwine conditions to make a `AND` condition.
 
 For example, the following query will list all the books that were published in the year 2003.
 
