@@ -60,7 +60,7 @@ For example, the folowing query will search for all the books title inside the b
         (f:destination:
         
          <ul>
-          (f:bookstore/book
+          (f:bookstore/book:
              <li> (v:title:) </li>
           )
         </ul>
@@ -101,7 +101,7 @@ For example, the following query will list all the books that were published in 
         (f:destination:
         
          <ul>
-          (f:bookstore/book
+          (f:bookstore/book:
             (w:year:=[2003]
                <li> (v:title:) </li>
              )
@@ -118,4 +118,6 @@ For example, the following query will list all the books that were published in 
 
 Working on it
 
+## Path
 
+As you see each path must be closed by the `;` character
