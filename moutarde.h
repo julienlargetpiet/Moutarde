@@ -136,22 +136,7 @@ bool is_greater_str(std::string &x, std::string &x2) {
   return 1;
 };
 
-std::vector<std::string> str_sort_descend(std::vector<std::string> &x, 
-                std::vector<char> order_v = {
-                         ' ', '!', '"', '#', '$', '%', '&', 
-                        '\'', '(', ')', '*', '+', ',', '-', 
-                        '.', '/', '0', '1', '2', '3', '4', '5',
-                        '6', '7', '8', '9', ':', ';', '<', '=',
-                        '>', '?', '@', 'A', 'B', 'C', 'D', 'E',
-                        'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-                        'V', 'W', 'X', 'Y', 'Z', '[', '\\', 
-                        ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
-                        'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-                        'v', 'w', 'x', 'y', 'z', '{', '|', '}',
-                        '~'           
-                }) {
+std::vector<std::string> str_sort_descend(std::vector<std::string> &x) {
   unsigned int i;
   unsigned int i2;
   const unsigned int n = x.size();
@@ -183,7 +168,7 @@ std::vector<std::string> str_sort_descend(std::vector<std::string> &x,
     cur_str = x[i];
     idx_max = i;
     for (i2 = 0; i2 < n; ++i2) {
-      is_sup = is_greater_str(x[i2], cur_str, order_v);
+      is_sup = is_greater_str(x[i2], cur_str);
       if (is_sup) {
         cur_str = x[i2];
         idx_max = i2;
@@ -195,22 +180,7 @@ std::vector<std::string> str_sort_descend(std::vector<std::string> &x,
   return rtn_v;
 };
 
-std::vector<std::string> str_sort_ascend(std::vector<std::string> x,
-                std::vector<char> order_v = {
-                         ' ', '!', '"', '#', '$', '%', '&', 
-                        '\'', '(', ')', '*', '+', ',', '-', 
-                        '.', '/', '0', '1', '2', '3', '4', '5',
-                        '6', '7', '8', '9', ':', ';', '<', '=',
-                        '>', '?', '@', 'A', 'B', 'C', 'D', 'E',
-                        'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-                        'V', 'W', 'X', 'Y', 'Z', '[', '\\', 
-                        ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
-                        'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-                        'v', 'w', 'x', 'y', 'z', '{', '|', '}',
-                        '~'           
-                }) {
+std::vector<std::string> str_sort_ascend(std::vector<std::string> x) {
   unsigned int i;
   unsigned int i2;
   const unsigned int n = x.size();
@@ -245,7 +215,7 @@ std::vector<std::string> str_sort_ascend(std::vector<std::string> x,
     cur_str = x[i];
     idx_min = i;
     for (i2 = 0; i2 < n; ++i2) {
-      is_sup = is_greater_str(x[i2], cur_str, order_v);
+      is_sup = is_greater_str(x[i2], cur_str);
       if (!is_sup) {
         cur_str = x[i2];
         idx_min = i2;
