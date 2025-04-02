@@ -71,7 +71,7 @@ For example, the folowing query will search for all the books title inside the b
 )
 ```
 
-## Where / If
+## Where / If - Conditions
 
 `w` is used as the keyword for a `condition`
 
