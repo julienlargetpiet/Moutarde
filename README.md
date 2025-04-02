@@ -77,7 +77,7 @@ For example, the folowing query will search for all the books title inside the b
 
 The `evaluation variable` of the condition is defined via its `path` inside the `moutarde` file.
 
-The conditions is defined after the `path` and the `:` symbol, as you see in the following example.
+The conditions is defined after the `path` and the `:` character, as you see in the following example.
 
 The supported conditions are: 
 
@@ -120,4 +120,4 @@ Working on it
 
 ## Path
 
-As you see each path must be closed by the `;` character
+As you see each path must be closed by the `:` character
