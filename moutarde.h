@@ -136,6 +136,127 @@ bool is_greater_str(std::string &x, std::string &x2) {
   return 1;
 };
 
+std::vector<std::string> str_sort_descend(std::vector<std::string> &x, 
+                std::vector<char> order_v = {
+                         ' ', '!', '"', '#', '$', '%', '&', 
+                        '\'', '(', ')', '*', '+', ',', '-', 
+                        '.', '/', '0', '1', '2', '3', '4', '5',
+                        '6', '7', '8', '9', ':', ';', '<', '=',
+                        '>', '?', '@', 'A', 'B', 'C', 'D', 'E',
+                        'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+                        'V', 'W', 'X', 'Y', 'Z', '[', '\\', 
+                        ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
+                        'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                        'v', 'w', 'x', 'y', 'z', '{', '|', '}',
+                        '~'           
+                }) {
+  unsigned int i;
+  unsigned int i2;
+  const unsigned int n = x.size();
+  std::vector<std::string> rtn_v = {};
+  rtn_v.reserve(n);
+  std::string cur_str;
+  std::vector<std::string> x_ref = x;
+  std::string min_str = " ";
+  unsigned int max_len = 1;
+  unsigned int cur_len;
+  unsigned int idx_max;
+  bool is_sup;
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    cur_len = cur_str.length();
+    if (max_len < cur_len) {
+      max_len = cur_len;
+    };
+  };
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    cur_len = cur_str.length();
+    for (i2 = cur_len; i2 < max_len; ++i2) {
+      cur_str.push_back(' ');
+    };
+    x[i] = cur_str;
+  };
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    idx_max = i;
+    for (i2 = 0; i2 < n; ++i2) {
+      is_sup = is_greater_str(x[i2], cur_str, order_v);
+      if (is_sup) {
+        cur_str = x[i2];
+        idx_max = i2;
+      };
+    };
+    x[idx_max] = min_str;
+    rtn_v.push_back(x_ref[idx_max]);
+  };
+  return rtn_v;
+};
+
+std::vector<std::string> str_sort_ascend(std::vector<std::string> x,
+                std::vector<char> order_v = {
+                         ' ', '!', '"', '#', '$', '%', '&', 
+                        '\'', '(', ')', '*', '+', ',', '-', 
+                        '.', '/', '0', '1', '2', '3', '4', '5',
+                        '6', '7', '8', '9', ':', ';', '<', '=',
+                        '>', '?', '@', 'A', 'B', 'C', 'D', 'E',
+                        'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+                        'V', 'W', 'X', 'Y', 'Z', '[', '\\', 
+                        ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
+                        'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                        'v', 'w', 'x', 'y', 'z', '{', '|', '}',
+                        '~'           
+                }) {
+  unsigned int i;
+  unsigned int i2;
+  const unsigned int n = x.size();
+  std::vector<std::string> rtn_v = {};
+  rtn_v.reserve(n);
+  std::string cur_str;
+  std::vector<std::string> x_ref = x;
+  std::string max_str = "~";
+  unsigned int max_len = 1;
+  unsigned int cur_len;
+  unsigned int idx_min;
+  bool is_sup;
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    cur_len = cur_str.length();
+    if (max_len < cur_len) {
+      max_len = cur_len;
+    };
+  };
+  for (i = 1; i < max_len; ++i) {
+    max_str.push_back('~');
+  };
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    cur_len = cur_str.length();
+    for (i2 = cur_len; i2 < max_len; ++i2) {
+      cur_str.push_back(' ');
+    };
+    x[i] = cur_str;
+  };
+  for (i = 0; i < n; ++i) {
+    cur_str = x[i];
+    idx_min = i;
+    for (i2 = 0; i2 < n; ++i2) {
+      is_sup = is_greater_str(x[i2], cur_str, order_v);
+      if (!is_sup) {
+        cur_str = x[i2];
+        idx_min = i2;
+      };
+    };
+    x[idx_min] = max_str;
+    rtn_v.push_back(x_ref[idx_min]);
+  };
+  return rtn_v;
+};
+
 void moutardify(std::string &moutarde, std::string &instruct_file, std::string &out_file, unsigned int end_head) {
   std::fstream moutarde_f(moutarde);
   std::string moutarde_str = "";
