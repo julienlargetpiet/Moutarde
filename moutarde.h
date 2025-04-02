@@ -235,8 +235,6 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   std::fstream out_f(out_file, std::ios::out);
   std::string currow;
   std::string cur_data = "";
-  std::vector<bool> history_sort = {};
-  std::vector<bool> history_sort_ascending = {};
   std::vector<char> tracks_instructions = {};
   bool is_good_when;
   bool is_greater;
