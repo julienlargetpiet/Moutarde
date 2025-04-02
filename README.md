@@ -85,6 +85,7 @@ The supported conditions are:
 - `>` is greater ?
 - `<` is lower ?
 - `!` is not equal ?
+- `E` belongs to ? (working on it)
 
 For example, the following query will list all the books that were published in the year 2003.
 
