@@ -68,7 +68,7 @@ Of course, you can `for loop` inside another `for loop`, and so on...
 
 For example, the folowing query will search for all the books title inside the bookstore.
 
-teste1.instruct
+teste1.instruct:
 
 ```
 <!DOCTYPE html>
