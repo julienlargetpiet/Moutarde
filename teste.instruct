@@ -6,39 +6,39 @@
         <meta charset="utf-8"/>
 </head>
 (<body>
- <center>
          (f:destination:
          <b>(v:restaurant/menu/size/weight:)</b>
-           <table>
            (f:bookstore/book:
              (w:title:=[Everyday Italian,Harry Potter,Learning XML]
-               <tr>
+               <ul>
                  (f:price/country:
                    (w:country:=[UK,Italy]
-                     <th>(v:price:)</th>
+                     <li>(v:price:)</li>
                    )
                  )
                 
                  (w:sells/country/country:=[Italy]
                  (f:sells/country:
                    (w:country:=[UK,Italy]
-                     <th>(v:s:)</th>
+                    (w:country:=[Italy]
+                       <li>(v:s:)</li>
+                     )
                    )
                  )
                  )
                 
                  (f:sells/country:
                    (w:country:=[UK,Italy]
-                     <th>(v:s:)</th>
+                     <li>(v:s:)</li>
                    )
                  )
 
-                 <th>(v:title:)</th>
-                 <th>(v:author:)</th>
-               </tr>
+                 <li>(v:title:)</li>
+                 <li>(v:author:)</li>
+               </ul>
              )
            )
-           </table>
+  <center>
           (f:restaurant/menu/size:
             (w:size:=[large,small]
             <i>(v:weight:)</i>
