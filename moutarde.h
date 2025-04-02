@@ -136,7 +136,6 @@ bool is_greater_str(std::string &x, std::string &x2) {
   return 1;
 };
 
-
 void moutardify(std::string &moutarde, std::string &instruct_file, std::string &out_file, unsigned int end_head) {
   std::fstream moutarde_f(moutarde);
   std::string moutarde_str = "";
@@ -157,6 +156,8 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   unsigned int end_for_cnt;
   unsigned int post_len;
   unsigned int cur_pair;
+  unsigned int where_pair;
+  unsigned int where_cnt;
   unsigned int cnt = 0;
   unsigned int cnt2 = 0;
   unsigned int depth_for = 0;
@@ -238,6 +239,8 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
       len_v.push_back(cur_pathv.size());
       cnt2 += 1;
       if (cur_instruction == 'w') {
+        where_pair = instruct_pair_v[cnt];
+        where_cnt = cnt;
         cur_value = "";
         when_vec_args = {};
         when_condition = instruct_str[cnt2];
@@ -349,21 +352,21 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                   };
                   is_good_when = 0;
                   if (when_condition == '=') {
-                    for (tmp_cnt = 0; tmp_cnt < when_vec_args[when_vec_args.size() - 1].size(); ++tmp_cnt) {
+                    for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       if (when_vec_args[tmp_cnt] == cur_value) {
                         is_good_when = 1;
                         break;
                       };
                     };
                   } else if (when_condition == '!') {
-                    for (tmp_cnt = 0; tmp_cnt < when_vec_args[when_vec_args.size() - 1].size(); ++tmp_cnt) {
+                    for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       if (when_vec_args[tmp_cnt] != cur_value) {
                         is_good_when = 1;
                         break;
                       };
                     };
                   } else if (when_condition == '>') {
-                    for (tmp_cnt = 0; tmp_cnt < when_vec_args[when_vec_args.size() - 1].size(); ++tmp_cnt) {
+                    for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       is_greater = is_greater_str(cur_value, when_vec_args[tmp_cnt]);
                       if (is_greater) {
                         is_good_when = 1;
@@ -371,7 +374,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                       };
                     };
                   } else if (when_condition == '<') {
-                    for (tmp_cnt = 0; tmp_cnt < when_vec_args[when_vec_args.size() - 1].size(); ++tmp_cnt) {
+                    for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       is_greater = is_greater_str(cur_value, when_vec_args[tmp_cnt]);
                       if (!is_greater) {
                         is_good_when = 1;
@@ -447,12 +450,13 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                 cur_pathv.pop_back();
               };
               len_v.pop_back();
-              cnt += 1;
-              while (cur_pair != instruct_pair_v[cnt]) {
+              cnt = where_cnt + 1;
+              while (where_pair != instruct_pair_v[cnt]) {
                 cnt += 1;
               };
               cnt -= 1;
               cnt2 = instruct_idx_v[cnt + 1];
+              path_level = ref_path_level;
             };
           } else {
              std::cout << "(VALUE ERROR) for path: \n";
