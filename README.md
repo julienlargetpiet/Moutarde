@@ -227,7 +227,7 @@ int main() {
 };
 ```
 
-**Note**
+[NOTE]
 Working on intricated sorting
 
 ## Path
