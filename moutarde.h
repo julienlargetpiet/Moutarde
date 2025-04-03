@@ -136,7 +136,7 @@ bool is_greater_str(std::string &x, std::string &x2) {
   return 1;
 };
 
-std::vector<std::string> str_sort_descend(std::vector<std::string> &x) {
+std::vector<std::string> str_sort_descend(std::vector<std::string> x) {
   unsigned int i;
   unsigned int i2;
   const unsigned int n = x.size();
