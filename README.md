@@ -123,8 +123,8 @@ The conditions is defined after the `path` and the `:` character, as you see in 
 The supported conditions are: 
 
 - `=` is equal to at least one inside `[x1,x2,x3...]` ?
-- `>` is greater than at least one in `[x1,x2,x3...]` ?
-- `<` is lower than at least one in `[x1,x2,x3...]` ?
+- `>` is greater than at least one in `[x1,x2,x3...]` ? - in future version
+- `<` is lower than at least one in `[x1,x2,x3...]` ? + in future version
 - `!` is not equal to at least one in `[x1,x2,x3...]` ?
 - `E` belongs to [min,max] ? (working on it)
 
@@ -180,7 +180,55 @@ int main() {
 
 ## Sort 
 
-Working on it
+Sorting result returned in a `for loop`, is defined putting the `-` character or the `+` character after the variable `path` of the `for loop` to respectively perform a descending and ascending sort. The variable from which the sort is based is defined after the `-` or `+` and `:` character, see example (must end with `:`)
+
+For example, the following query will search for all the books in the bookstore and sort them decreasingly.
+
+teste1.instruct:
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title> Teste </title>
+        <link rel = "stylesheet" href = "style.css">
+        <meta charset="utf-8"/>
+</head>
+(<body>
+         (f:destination:
+           (f:bookstore/book:
+               <ul>
+                 (f:price/country:-:price:
+                     <li>here 1: (v:price:)</li>
+                 )
+                
+               </ul>
+           )
+        )
+</body>
+)
+```
+
+teste.cpp:
+
+```
+#include "moutarde.h"
+
+int main() {
+ 
+  std::string instruct_file = "teste1.instruct";
+  std::string moutarde_file = "teste.moutarde";
+  std::string html_file = "teste.html";
+  unsigned int end_head = 6;
+
+  moutardify(moutarde_file, instruct_file, html_file, end_head);
+
+  return 0;
+};
+```
+
+**Note**
+Working on intricated sorting
 
 ## Path
 
