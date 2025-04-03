@@ -158,14 +158,6 @@ std::vector<std::string> str_sort_descend(std::vector<std::string> x) {
   };
   for (i = 0; i < n; ++i) {
     cur_str = x[i];
-    cur_len = cur_str.length();
-    for (i2 = cur_len; i2 < max_len; ++i2) {
-      cur_str.push_back(' ');
-    };
-    x[i] = cur_str;
-  };
-  for (i = 0; i < n; ++i) {
-    cur_str = x[i];
     idx_max = i;
     for (i2 = 0; i2 < n; ++i2) {
       is_sup = is_greater_str(x[i2], cur_str);
@@ -202,14 +194,6 @@ std::vector<std::string> str_sort_ascend(std::vector<std::string> x) {
   };
   for (i = 1; i < max_len; ++i) {
     max_str.push_back('~');
-  };
-  for (i = 0; i < n; ++i) {
-    cur_str = x[i];
-    cur_len = cur_str.length();
-    for (i2 = cur_len; i2 < max_len; ++i2) {
-      cur_str.push_back(' ');
-    };
-    x[i] = cur_str;
   };
   for (i = 0; i < n; ++i) {
     cur_str = x[i];
