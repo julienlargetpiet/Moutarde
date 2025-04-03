@@ -102,11 +102,11 @@
          (country:France)
        )
        (country:
-         (price:30.5)
+         (price:305)
          (country:UK)
        )
        (country:
-         (price:30.6)
+         (price:306)
          (country:Italy)
        )
      )

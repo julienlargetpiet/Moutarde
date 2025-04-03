@@ -218,10 +218,21 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   std::fstream instruct_f(instruct_file);
   std::fstream out_f(out_file, std::ios::out);
   std::string currow;
-  std::string cur_data = "";
+  std::string cur_data;
   std::vector<char> tracks_instructions = {};
   bool is_good_when;
   bool is_greater;
+  std::vector<std::vector<std::string>> seq_data = {{""}};
+  std::vector<std::string> sort_pathv = {};
+  std::vector<std::string> seq_data_ref = {};
+  std::string cur_val_seq_ref;
+  std::vector<std::string> srt_seq_data_ref = {};
+  std::vector<bool> is_sort = {};
+  std::vector<bool> is_sort_ref = {};
+  std::vector<bool> is_sort_ascending = {};
+  std::vector<bool> is_sort_ascending_ref = {};
+  std::vector<std::string> cur_sortv;
+  bool now_sort;
   std::vector<bool> alrd_found_whenv = {0};
   bool alrd_found_when;
   bool alrd_found_when2;
@@ -257,6 +268,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   std::vector<unsigned int> instruct_idx_v;
   std::vector<std::vector<unsigned int>> rtn_matr;
   std::vector<std::string> cur_pathv = {};
+  std::vector<std::string> cur_pathv_ref;
   std::vector<std::string> pre_sorted_data;
   end_head += 1;
   std::string cur_value;
@@ -265,8 +277,8 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
     moutarde_str.push_back('\n');
   };
   while (getline(instruct_f, currow)) {
-    cur_data += currow;
-    cur_data.push_back('\n');
+    seq_data[0][0] += currow;
+    seq_data[0][0].push_back('\n');
     cnt += 1;
     if (cnt == end_head) {
       break;
@@ -291,7 +303,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   while (cnt < n_token) {
     next_idx = instruct_idx_v[cnt];
     while (cnt2 < next_idx) {
-      cur_data.push_back(instruct_str[cnt2]);
+      seq_data[depth_for][seq_data[depth_for].size() - 1].push_back(instruct_str[cnt2]);
       cnt2 += 1;
     };
     if (instruct_str[next_idx] == '(') {
@@ -358,6 +370,55 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                 ref_for_idxv.push_back(cnt);
                 ref_for_idxv2.push_back(instruct_idx_v[cnt]);
                 alrd_found_whenv.push_back(0);
+                if (seq_data.size() == depth_for) {
+                  seq_data.push_back({});
+                };
+                if (depth_for - 1 == is_sort_ref.size()) {
+                  is_sort_ref.push_back(0);
+                  is_sort_ascending_ref.push_back(0);
+                };
+                seq_data[depth_for].push_back("");
+                if (instruct_str[cnt2] == '+') {
+                  is_sort_ascending.push_back(1);
+                  is_sort_ascending_ref[depth_for - 1] = 1;
+                  is_sort.push_back(1);
+                  is_sort_ref[depth_for - 1] = 1;
+                  cnt2 += 2;
+                  sort_pathv = cur_pathv;
+                  cur_value = "";
+                  while (instruct_str[cnt2] != ':') {
+                    if (instruct_str[cnt2] != '/') {
+                      cur_value.push_back(instruct_str[cnt2]);
+                    } else {
+                      sort_pathv.push_back(cur_value);
+                      cur_value = "";
+                    };
+                    cnt2 += 1;
+                  };
+                  sort_pathv.push_back(cur_value);
+                  cnt2 += 1;
+                } else if (instruct_str[cnt2] == '-') {
+                  is_sort_ascending.push_back(0);
+                  is_sort.push_back(1);
+                  is_sort_ref[depth_for - 1] = 1;
+                  cnt2 += 2;
+                  sort_pathv = cur_pathv;
+                  cur_value = "";
+                  while (instruct_str[cnt2] != ':') {
+                    if (instruct_str[cnt2] != '/') {
+                      cur_value.push_back(instruct_str[cnt2]);
+                    } else {
+                      sort_pathv.push_back(cur_value);
+                      cur_value = "";
+                    };
+                    cnt2 += 1;
+                  };
+                  sort_pathv.push_back(cur_value);
+                  cnt2 += 1;
+                } else {
+                  is_sort.push_back(0);
+                  is_sort_ascending.push_back(0);
+                };
                 break;
               };
               path_level += 1;
@@ -379,7 +440,6 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
           cnt2 = instruct_idx_v[end_for_cnt] + 1;
           tracks_instructions.pop_back();
           cur_instruction = '?';
-          depth_for -= 1;
           pre_len = len_v[len_v.size() - 2];
           post_len = len_v[len_v.size() - 1];
           for (tmp_cnt = pre_len; tmp_cnt < post_len; ++tmp_cnt) {
@@ -388,7 +448,42 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
           };
           len_v.pop_back();
           path_level = ref_path_level;
-          moutarde_cnt = moutarde_cntv[depth_for];
+          moutarde_cnt = moutarde_cntv[depth_for - 1];
+          now_sort = is_sort_ref[depth_for - 1];
+          cur_data = "";
+          if (now_sort) {
+            cur_sortv = {};
+            if (is_sort_ascending_ref[depth_for - 1]) {
+              srt_seq_data_ref = str_sort_ascend(seq_data_ref);
+              for (tmp_cnt = 0; tmp_cnt < seq_data_ref.size(); ++tmp_cnt) {
+                tmp_cnt2 = 0;
+                while (srt_seq_data_ref[tmp_cnt] != seq_data_ref[tmp_cnt2]) {
+                  tmp_cnt2 += 1;
+                };
+                cur_sortv.push_back(seq_data[depth_for][tmp_cnt2]);
+              };
+            } else {
+              srt_seq_data_ref = str_sort_descend(seq_data_ref);
+              for (tmp_cnt = 0; tmp_cnt < seq_data_ref.size(); ++tmp_cnt) {
+                tmp_cnt2 = 0;
+                while (srt_seq_data_ref[tmp_cnt] != seq_data_ref[tmp_cnt2]) {
+                  tmp_cnt2 += 1;
+                };
+                cur_sortv.push_back(seq_data[depth_for][tmp_cnt2]);
+              };
+            };
+          } else {
+            cur_sortv = seq_data[depth_for];
+          };
+          for (tmp_cnt = 0; tmp_cnt < cur_sortv.size(); ++tmp_cnt) {
+            cur_data += cur_sortv[tmp_cnt];
+          };
+          depth_for -= 1;
+          seq_data[depth_for][seq_data[depth_for].size() - 1] += cur_data;
+          is_sort_ref.pop_back();
+          is_sort_ascending_ref.pop_back();
+          seq_data.pop_back();
+          seq_data_ref = {};
         };
       };
       if (cur_instruction == 'v' || cur_instruction == 'w') {
@@ -412,9 +507,31 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                 if (cur_instruction == 'v') {
                   moutarde_cnt2 += 1;
                   while (moutarde_str[moutarde_cnt2] != ')') {
-                    cur_data.push_back(moutarde_str[moutarde_cnt2]);
+                    seq_data[depth_for][seq_data[depth_for].size() - 1].push_back(moutarde_str[moutarde_cnt2]);
                     moutarde_cnt2 += 1;
                   };
+                  now_sort = is_sort[depth_for - 1];
+                  if (now_sort) {
+                    cur_pathv_ref = cur_pathv;
+                    cur_pathv = sort_pathv;
+                    moutarde_cnt = moutarde_cntv[depth_for];
+                    path_level = ref_path_level - 1;
+                    cur_pair = instruct_pair_v[cnt];
+                    is_sort[depth_for - 1] = 0;
+                    cur_instruction = 'S';
+                  } else {
+                    break;
+                  };
+                } else if (cur_instruction == 'S') {
+                  moutarde_cnt2 += 1;
+                  cur_val_seq_ref = "";
+                  while (moutarde_str[moutarde_cnt2] != ')') {
+                    cur_val_seq_ref.push_back(moutarde_str[moutarde_cnt2]);
+                    moutarde_cnt2 += 1;
+                  };
+                  seq_data_ref.push_back(cur_val_seq_ref);
+                  cur_pathv = cur_pathv_ref;
+                  //moutarde_cnt = moutarde_cntv[depth_for];
                   break;
                 } else {
                   moutarde_cnt2 += 1;
@@ -438,7 +555,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                         break;
                       };
                     };
-                  } else if (when_condition == '>') {
+                  } else if (when_condition == '+') {
                     for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       is_greater = is_greater_str(cur_value, when_vec_args[tmp_cnt]);
                       if (is_greater) {
@@ -446,7 +563,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                         break;
                       };
                     };
-                  } else if (when_condition == '<') {
+                  } else if (when_condition == '-') {
                     for (tmp_cnt = 0; tmp_cnt < when_vec_args.size(); ++tmp_cnt) {
                       is_greater = is_greater_str(cur_value, when_vec_args[tmp_cnt]);
                       if (!is_greater) {
@@ -569,11 +686,13 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
         ref_for_idxv.pop_back();
         ref_for_idxv2.pop_back();
         alrd_found_whenv.pop_back();
+        is_sort.pop_back();
+        is_sort_ascending.pop_back();
       };
     };
     cnt += 1;
   };
-  out_f << cur_data; 
+  out_f << seq_data[0][0]; 
 };
 
 
