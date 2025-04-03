@@ -531,7 +531,6 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                   };
                   seq_data_ref.push_back(cur_val_seq_ref);
                   cur_pathv = cur_pathv_ref;
-                  //moutarde_cnt = moutarde_cntv[depth_for];
                   break;
                 } else {
                   moutarde_cnt2 += 1;
