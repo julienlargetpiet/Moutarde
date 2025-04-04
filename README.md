@@ -126,7 +126,6 @@ The supported conditions are:
 - `>` is greater than at least one in `[x1,x2,x3...]` ? - in future version
 - `<` is lower than at least one in `[x1,x2,x3...]` ? + in future version
 - `!` is not equal to at least one in `[x1,x2,x3...]` ?
-- `E` belongs to [min,max] ? (working on it)
 
 Of course, you can interwine conditions to make a `AND` condition.
 
