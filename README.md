@@ -182,7 +182,7 @@ int main() {
 Sorting result returned in a `for loop`, is defined putting the `-` character or the `+` character after the variable `path` of the `for loop` to respectively perform a descending and ascending sort. The variable from which the sort is based is defined after the `-` or `+` and `:` character, see example (must end with `:`)
 You can interwine `for loop` with `sorting` enabled.
 
-For example, the following query will search for all the prices of the books in the bookstore according to the country and sort them decreasingly.
+For example, the following query will search for all the prices of the books in the bookstore according to the country and sort their price decreasingly. It will sort the books in increasing order.
 
 teste1.instruct:
 
@@ -196,7 +196,7 @@ teste1.instruct:
 </head>
 (<body>
          (f:destination:
-           (f:bookstore/book:
+           (f:bookstore/book:+:title:
                <ul>
                  (f:price/country:-:price:
                      <li>here 1: (v:price:)</li>
