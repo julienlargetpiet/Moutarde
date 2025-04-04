@@ -223,8 +223,9 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   bool is_good_when;
   bool is_greater;
   std::vector<std::vector<std::string>> seq_data = {{""}};
-  std::vector<std::string> sort_pathv = {};
-  std::vector<std::string> seq_data_ref = {};
+  std::vector<std::vector<std::string>> sort_pathv = {};
+  std::vector<std::vector<std::string>> seq_data_ref = {};
+  std::vector<std::string> cur_vec_seq_ref;
   std::string cur_val_seq_ref;
   std::vector<std::string> srt_seq_data_ref = {};
   std::vector<bool> is_sort = {};
@@ -236,6 +237,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
   std::vector<bool> alrd_found_whenv = {0};
   bool alrd_found_when;
   bool alrd_found_when2;
+  unsigned int cnt2_ref;
   unsigned int pre_len;
   unsigned int end_for_cnt;
   unsigned int post_len;
@@ -373,10 +375,28 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                 if (seq_data.size() == depth_for) {
                   seq_data.push_back({});
                 };
+                cnt2_ref = cnt2;
                 if (depth_for - 1 == is_sort_ref.size()) {
                   is_sort_ref.push_back(0);
                   is_sort_ascending_ref.push_back(0);
+                  seq_data_ref.push_back({});
+                  sort_pathv.push_back(cur_pathv);
+                  if (instruct_str[cnt2] == '+' || instruct_str[cnt2] == '-') {
+                    cnt2 += 2;
+                    cur_value = "";
+                    while (instruct_str[cnt2] != ':') {
+                      if (instruct_str[cnt2] != '/') {
+                        cur_value.push_back(instruct_str[cnt2]);
+                      } else {
+                        sort_pathv[depth_for - 1].push_back(cur_value);
+                        cur_value = "";
+                      };
+                      cnt2 += 1;
+                    };
+                    sort_pathv[depth_for - 1].push_back(cur_value);
+                  };
                 };
+                cnt2 = cnt2_ref;
                 seq_data[depth_for].push_back("");
                 if (instruct_str[cnt2] == '+') {
                   is_sort_ascending.push_back(1);
@@ -384,36 +404,18 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                   is_sort.push_back(1);
                   is_sort_ref[depth_for - 1] = 1;
                   cnt2 += 2;
-                  sort_pathv = cur_pathv;
-                  cur_value = "";
                   while (instruct_str[cnt2] != ':') {
-                    if (instruct_str[cnt2] != '/') {
-                      cur_value.push_back(instruct_str[cnt2]);
-                    } else {
-                      sort_pathv.push_back(cur_value);
-                      cur_value = "";
-                    };
                     cnt2 += 1;
                   };
-                  sort_pathv.push_back(cur_value);
                   cnt2 += 1;
                 } else if (instruct_str[cnt2] == '-') {
                   is_sort_ascending.push_back(0);
                   is_sort.push_back(1);
                   is_sort_ref[depth_for - 1] = 1;
                   cnt2 += 2;
-                  sort_pathv = cur_pathv;
-                  cur_value = "";
                   while (instruct_str[cnt2] != ':') {
-                    if (instruct_str[cnt2] != '/') {
-                      cur_value.push_back(instruct_str[cnt2]);
-                    } else {
-                      sort_pathv.push_back(cur_value);
-                      cur_value = "";
-                    };
                     cnt2 += 1;
                   };
-                  sort_pathv.push_back(cur_value);
                   cnt2 += 1;
                 } else {
                   is_sort.push_back(0);
@@ -453,20 +455,21 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
           cur_data = "";
           if (now_sort) {
             cur_sortv = {};
+            cur_vec_seq_ref = seq_data_ref[depth_for - 1];
             if (is_sort_ascending_ref[depth_for - 1]) {
-              srt_seq_data_ref = str_sort_ascend(seq_data_ref);
-              for (tmp_cnt = 0; tmp_cnt < seq_data_ref.size(); ++tmp_cnt) {
+              srt_seq_data_ref = str_sort_ascend(cur_vec_seq_ref);
+              for (tmp_cnt = 0; tmp_cnt < cur_vec_seq_ref.size(); ++tmp_cnt) {
                 tmp_cnt2 = 0;
-                while (srt_seq_data_ref[tmp_cnt] != seq_data_ref[tmp_cnt2]) {
+                while (srt_seq_data_ref[tmp_cnt] != cur_vec_seq_ref[tmp_cnt2]) {
                   tmp_cnt2 += 1;
                 };
                 cur_sortv.push_back(seq_data[depth_for][tmp_cnt2]);
               };
             } else {
-              srt_seq_data_ref = str_sort_descend(seq_data_ref);
-              for (tmp_cnt = 0; tmp_cnt < seq_data_ref.size(); ++tmp_cnt) {
+              srt_seq_data_ref = str_sort_descend(cur_vec_seq_ref);
+              for (tmp_cnt = 0; tmp_cnt < cur_vec_seq_ref.size(); ++tmp_cnt) {
                 tmp_cnt2 = 0;
-                while (srt_seq_data_ref[tmp_cnt] != seq_data_ref[tmp_cnt2]) {
+                while (srt_seq_data_ref[tmp_cnt] != cur_vec_seq_ref[tmp_cnt2]) {
                   tmp_cnt2 += 1;
                 };
                 cur_sortv.push_back(seq_data[depth_for][tmp_cnt2]);
@@ -483,7 +486,8 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
           is_sort_ref.pop_back();
           is_sort_ascending_ref.pop_back();
           seq_data.pop_back();
-          seq_data_ref = {};
+          seq_data_ref.pop_back();
+          sort_pathv.pop_back();
         };
       };
       if (cur_instruction == 'v' || cur_instruction == 'w') {
@@ -513,7 +517,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                   now_sort = is_sort[depth_for - 1];
                   if (now_sort) {
                     cur_pathv_ref = cur_pathv;
-                    cur_pathv = sort_pathv;
+                    cur_pathv = sort_pathv[depth_for - 1];
                     moutarde_cnt = moutarde_cntv[depth_for];
                     path_level = ref_path_level - 1;
                     cur_pair = instruct_pair_v[cnt];
@@ -529,7 +533,7 @@ void moutardify(std::string &moutarde, std::string &instruct_file, std::string &
                     cur_val_seq_ref.push_back(moutarde_str[moutarde_cnt2]);
                     moutarde_cnt2 += 1;
                   };
-                  seq_data_ref.push_back(cur_val_seq_ref);
+                  seq_data_ref[depth_for - 1].push_back(cur_val_seq_ref);
                   cur_pathv = cur_pathv_ref;
                   break;
                 } else {
