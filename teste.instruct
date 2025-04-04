@@ -8,7 +8,7 @@
 (<body>
          (f:destination:
          <b>(v:restaurant/menu/size/weight:)</b>
-           (f:bookstore/book:
+           (f:bookstore/book:+:title:
              (w:title:=[Everyday Italian,Harry Poter,Learning XML]
                <ul>
                  (f:price/country:-:price:
@@ -25,7 +25,7 @@
                  )
                  )
                 
-                 (f:sells/country:-:s:
+                 (f:sells/country:+:s:
                    (w:country:=[France,Italy]
                      <li>here3: (v:s:)</li>
                    )
@@ -37,7 +37,7 @@
              )
            )
   <center>
-          (f:restaurant/menu/size:
+          (f:restaurant/menu/size:-:weight:
             (w:size:=[large,small]
             <i>(v:weight:)</i>
             )
