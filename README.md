@@ -181,6 +181,7 @@ int main() {
 ## Sort 
 
 Sorting result returned in a `for loop`, is defined putting the `-` character or the `+` character after the variable `path` of the `for loop` to respectively perform a descending and ascending sort. The variable from which the sort is based is defined after the `-` or `+` and `:` character, see example (must end with `:`)
+You can interwine `for loop` with `sorting` enabled.
 
 For example, the following query will search for all the prices of the books in the bookstore according to the country and sort them decreasingly.
 
@@ -226,9 +227,6 @@ int main() {
   return 0;
 };
 ```
-
-[NOTE]
-Working on intricated sorting
 
 ## Path
 
