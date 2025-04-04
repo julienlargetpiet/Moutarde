@@ -197,6 +197,7 @@ teste1.instruct:
 (<body>
          (f:destination:
            (f:bookstore/book:+:title:
+               <b>(v:title:)</b>
                <ul>
                  (f:price/country:-:price:
                      <li>here 1: (v:price:)</li>
